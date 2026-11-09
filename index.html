@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JIAJOLOVE | Portfolio</title>
+    <style>
+        /* 全局基础设置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 深色科技感背景 */
+        body {
+            background-color: #0f172a; /* 极客深蓝 */
+            color: #e2e8f0;            /* 浅灰白文字 */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;          /* 防止出现滚动条 */
+            position: relative;
+        }
+
+        /* 背景光晕特效（增加空间感） */
+        .glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #6366f1, #a855f7); /* 蓝紫渐变 */
+            border-radius: 50%;
+            filter: blur(120px); /* 模糊效果 */
+            opacity: 0.4;
+            z-index: -1;
+            animation: float 6s ease-in-out infinite alternate;
+        }
+
+        /* 光晕呼吸动画 */
+        @keyframes float {
+            0% { transform: translate(-50px, -50px) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.2); }
+        }
+
+        /* 核心内容容器 */
+        .hero-container {
+            text-align: center;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        /* 头像/Logo 部分 */
+        .avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.1) rotate(10deg); /* 鼠标悬浮时放大并旋转 */
+        }
+
+        /* 大标题及渐变文字 */
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            color: transparent; /* 让文字透明，透出背景渐变 */
+        }
+
+        /* 副标题/Slogan */
+        p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 40px;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 按钮样式 */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 40px; /* 稍微加大了内边距，让单个按钮看起来更饱满 */
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        /* 主按钮（实心渐变） */
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景光晕 -->
+    <div class="glow"></div>
+
+    <!-- 首屏内容 -->
+    <div class="hero-container">
+        <!-- 这里可以用你的照片，目前用首字母代替 -->
+        <div class="avatar">J</div>
+        
+        <h1>Hi, I'm <span class="gradient-text">JIAJOLOVE</span></h1>
+        <p>用代码构建我的世界，从零开始，永不止步。</p>
+        
+        <div class="btn-group">
+            <!-- 只保留了 GitHub 网址，点击会在新标签页打开 -->
+            <a href="https://github.com/JIAJOLOVE" class="btn btn-primary" target="_blank">查看我的 GitHub</a>
+        </div>
+    </div>
+
+</body>
+</html>
