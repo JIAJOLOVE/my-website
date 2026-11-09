@@ -268,6 +268,37 @@
     &lt;/code&gt;
 &lt;/pre&gt;</code></pre>
 
+        <!-- 解释 7 -->
+        <h2>7. 为什么网页在手机上不会“缩成一团”？（移动端适配）</h2>
+        <p><strong>大白话解释：</strong>这行代码藏在网页的最开头（<code>&lt;head&gt;</code> 里）。它告诉手机浏览器：“请按照手机屏幕的真实宽度来显示网页，不要把网页缩小当成电脑网页看。”</p>
+        <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+
+        <!-- 解释 8 -->
+        <h2>8. 鼠标放上去为什么会有平滑的动画？（过渡效果）</h2>
+        <p><strong>大白话解释：</strong><code>transition</code> 就像一个缓冲器。它让按钮变色、移动的过程变得平滑，而不是瞬间“闪”过去。<code>:hover</code> 则是触发条件：“当鼠标悬停时”。</p>
+        <pre><code>.btn {
+    transition: all 0.3s ease; /* 所有变化都耗时0.3秒，速度平滑 */
+}
+
+.btn:hover {
+    transform: translateY(-3px); /* 鼠标放上去时，向上移动3像素 */
+}</code></pre>
+
+        <!-- 解释 9 -->
+        <h2>9. 为什么加了边框，盒子不会变形？（盒模型设定）</h2>
+        <p><strong>大白话解释：</strong>通常会设定一个宽度 100px 的盒子，如果再加 10px 的内边距，它会撑大到 120px。<code>box-sizing: border-box;</code> 改变了这个规则，让宽度包含内边距，保证页面排版不乱。</p>
+        <pre><code>* {
+    box-sizing: border-box;
+}</code></pre>
+
+        <!-- 解释 10 -->
+        <h2>10. 按钮之间怎么自动保持距离？（Flex 间隙）</h2>
+        <p><strong>大白话解释：</strong>在按钮组里，有两个按钮。加上 <code>gap: 20px;</code>，就会自动在两个按钮中间留出 20 像素的空隙，不用再去写复杂的 margin 边距了。</p>
+        <pre><code>.btn-group {
+    display: flex;
+    gap: 20px; /* 让子元素之间保持 20px 的距离 */
+}</code></pre>
+
         <!-- 返回顶部 -->
         <a href="#top" class="back-to-top">↑ 返回顶部</a>
     </div>
