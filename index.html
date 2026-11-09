@@ -5,53 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JIAJOLOVE | Portfolio</title>
     <style>
-        /* 全局基础设置 */
+        /* === 全局基础设置 === */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth; /* 让鼠标滚动或点击锚点时，滑动非常丝滑 */
         }
 
-        /* 深色科技感背景 */
         body {
-            background-color: #0f172a; /* 极客深蓝 */
-            color: #e2e8f0;            /* 浅灰白文字 */
-            height: 100vh;
+            background-color: #0f172a; /* 极客深蓝背景 */
+            color: #e2e8f0;
+        }
+
+        /* === 第一部分：首屏区域 === */
+        .hero-section {
+            height: 100vh; /* 高度占满整个屏幕 */
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;          /* 防止出现滚动条 */
             position: relative;
+            overflow: hidden; /* 只在首屏隐藏溢出，防止光晕跑出去 */
+            border-bottom: 1px solid #1e293b; /* 加一条极细的分割线 */
         }
 
-        /* 背景光晕特效（增加空间感） */
         .glow {
             position: absolute;
             width: 400px;
             height: 400px;
-            background: linear-gradient(135deg, #6366f1, #a855f7); /* 蓝紫渐变 */
+            background: linear-gradient(135deg, #6366f1, #a855f7);
             border-radius: 50%;
-            filter: blur(120px); /* 模糊效果 */
+            filter: blur(120px);
             opacity: 0.4;
             z-index: -1;
             animation: float 6s ease-in-out infinite alternate;
         }
 
-        /* 光晕呼吸动画 */
         @keyframes float {
             0% { transform: translate(-50px, -50px) scale(1); }
             100% { transform: translate(50px, 50px) scale(1.2); }
         }
 
-        /* 核心内容容器 */
         .hero-container {
             text-align: center;
             z-index: 1;
             padding: 20px;
         }
 
-        /* 头像/Logo 部分 */
         .avatar {
             width: 120px;
             height: 120px;
@@ -69,10 +70,9 @@
         }
 
         .avatar:hover {
-            transform: scale(1.1) rotate(10deg); /* 鼠标悬浮时放大并旋转 */
+            transform: scale(1.1) rotate(10deg);
         }
 
-        /* 大标题及渐变文字 */
         h1 {
             font-size: 3.5rem;
             margin-bottom: 15px;
@@ -83,37 +83,32 @@
             background: linear-gradient(to right, #38bdf8, #818cf8, #c084fc);
             -webkit-background-clip: text;
             background-clip: text;
-            color: transparent; /* 让文字透明，透出背景渐变 */
+            color: transparent;
         }
 
-        /* 副标题/Slogan */
-        p {
+        .hero-container p {
             font-size: 1.2rem;
             color: #94a3b8;
             margin-bottom: 40px;
-            max-width: 600px;
-            line-height: 1.6;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        /* 按钮样式 */
         .btn-group {
             display: flex;
+            gap: 20px;
             justify-content: center;
         }
 
         .btn {
-            padding: 15px 40px; /* 稍微加大了内边距，让单个按钮看起来更饱满 */
+            padding: 12px 30px;
             border-radius: 30px;
             font-size: 1.1rem;
             font-weight: bold;
             text-decoration: none;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            cursor: pointer;
         }
 
-        /* 主按钮（实心渐变） */
         .btn-primary {
             background: linear-gradient(135deg, #6366f1, #a855f7);
             color: white;
@@ -124,25 +119,132 @@
             box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
             transform: translateY(-3px);
         }
+
+        .btn-outline {
+            border-color: #6366f1;
+            color: #818cf8;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(99, 102, 241, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* === 第二部分：代码解析区域（向下滚动可见） === */
+        .notes-section {
+            padding: 80px 20px;
+            max-width: 800px;
+            margin: 0 auto; /* 居中显示 */
+        }
+
+        .notes-title {
+            text-align: center;
+            color: #38bdf8;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            color: #c084fc;
+            margin-top: 50px;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 10px;
+        }
+
+        .notes-section p {
+            color: #94a3b8;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* 代码块的专属黑底样式 */
+        pre {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid #6366f1;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #38bdf8;
+            font-size: 1rem;
+        }
+
+        /* 返回顶部的按钮 */
+        .back-to-top {
+            display: block;
+            text-align: center;
+            margin-top: 80px;
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-    <!-- 背景光晕 -->
-    <div class="glow"></div>
-
-    <!-- 首屏内容 -->
-    <div class="hero-container">
-        <!-- 这里可以用你的照片，目前用首字母代替 -->
-        <div class="avatar">J</div>
+    <!-- ======== 第一屏：炫酷的个人主页 ======== -->
+    <div class="hero-section" id="top">
+        <div class="glow"></div>
         
-        <h1>Hi, I'm <span class="gradient-text">JIAJOLOVE</span></h1>
-        <p>用代码构建我的世界，从零开始，永不止步。</p>
-        
-        <div class="btn-group">
-            <!-- 只保留了 GitHub 网址，点击会在新标签页打开 -->
-            <a href="https://github.com/JIAJOLOVE" class="btn btn-primary" target="_blank">查看我的 GitHub</a>
+        <div class="hero-container">
+            <div class="avatar">J</div>
+            
+            <h1>Hi, I'm <span class="gradient-text">JIAJOLOVE</span></h1>
+            <p>用代码构建我的世界，从零开始，永不止步。</p>
+            
+            <div class="btn-group">
+                <a href="https://github.com/JIAJOLOVE" class="btn btn-primary" target="_blank">查看我的 GitHub</a>
+                <!-- 这个按钮现在不再跳转新页面，而是利用锚点直接滑到下面的代码区 -->
+                <a href="#code-notes" class="btn btn-outline">📖 我的代码魔法本</a>
+            </div>
         </div>
+    </div>
+
+    <!-- ======== 第二屏：代码解析档案 ======== -->
+    <div class="notes-section" id="code-notes">
+        <h1 class="notes-title">📖 我的代码魔法本</h1>
+        <p style="text-align: center;">这里记录了我亲手写下的代码，以及它们背后的原理。向下滚动查看。</p>
+
+        <!-- 解释 1 -->
+        <h2>1. 让整个屏幕完全居中</h2>
+        <p><strong>大白话解释：</strong>通过 Flex 布局，让内容在屏幕的正中间，并且不出现难看的滚动条。</p>
+        <pre><code>body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}</code></pre>
+
+        <!-- 解释 2 -->
+        <h2>2. 渐变文字的魔法</h2>
+        <p><strong>大白话解释：</strong>先画一个渐变背景，然后把它裁剪成文字的形状，最后把文字本身变成透明，透出背后的渐变。</p>
+        <pre><code>.gradient-text {
+    background: linear-gradient(to right, #38bdf8, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}</code></pre>
+
+        <!-- 解释 3 -->
+        <h2>3. 发光光晕的产生</h2>
+        <p><strong>大白话解释：</strong>画一个圆，给它加上极高的模糊度（blur），它就变成了柔和的光晕。</p>
+        <pre><code>.glow {
+    position: absolute;
+    width: 400px; 
+    height: 400px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    border-radius: 50%;
+    filter: blur(120px);
+}</code></pre>
+
+        <!-- 返回顶部 -->
+        <a href="#top" class="back-to-top">↑ 返回顶部</a>
     </div>
 
 </body>
