@@ -19,6 +19,20 @@
             color: #e2e8f0;
         }
 
+        /* === 新增：跟随鼠标移动的光晕样式 === */
+        #cursor-glow {
+            position: fixed; /* 固定定位，不随网页滚动 */
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(0,0,0,0) 70%); /* 径向渐变，中心亮四周暗 */
+            border-radius: 50%;
+            pointer-events: none; /* 极其重要：让鼠标穿透它，不影响你点击下面的按钮 */
+            transform: translate(-50%, -50%); /* 让光晕的中心点刚好在鼠标指针上 */
+            z-index: 9999; /* 放在最上层 */
+            transition: opacity 0.3s ease;
+            opacity: 0; /* 默认隐藏，等鼠标进来再显示 */
+        }
+
         /* === 第一部分：首屏区域 === */
         .hero-section {
             height: 100vh; /* 高度占满整个屏幕 */
@@ -53,6 +67,7 @@
             padding: 20px;
         }
 
+        /* === 音乐头像样式 === */
         .avatar {
             width: 120px;
             height: 120px;
@@ -67,10 +82,27 @@
             color: white;
             box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
             transition: transform 0.3s ease;
+            cursor: pointer; /* 变成小手 */
+            user-select: none; /* 防止文字被选中 */
         }
 
         .avatar:hover {
             transform: scale(1.1) rotate(10deg);
+        }
+
+        /* 播放音乐时的旋转特效 */
+        .avatar.playing {
+            animation: spin 4s linear infinite;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.8); /* 播放时发光更亮 */
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 解决冲突：播放时鼠标悬停只放大，不干涉旋转 */
+        .avatar.playing:hover {
+            transform: scale(1.1); 
         }
 
         h1 {
@@ -130,11 +162,11 @@
             transform: translateY(-3px);
         }
 
-        /* === 第二部分：代码解析区域（向下滚动可见） === */
+        /* === 第二部分：代码解析区域 === */
         .notes-section {
             padding: 80px 20px;
             max-width: 800px;
-            margin: 0 auto; /* 居中显示 */
+            margin: 0 auto;
         }
 
         .notes-title {
@@ -156,9 +188,9 @@
             margin-top: 15px;
             margin-bottom: 20px;
             font-size: 1.1rem;
+            line-height: 1.6;
         }
 
-        /* 代码块的专属黑底样式 */
         pre {
             background-color: #1e293b;
             padding: 20px;
@@ -174,7 +206,6 @@
             font-size: 1rem;
         }
 
-        /* 返回顶部的按钮 */
         .back-to-top {
             display: block;
             text-align: center;
@@ -183,58 +214,29 @@
             text-decoration: none;
             font-weight: bold;
         }
-        /* === 新增：跟随鼠标移动的光晕样式 === */
-#cursor-glow {
-    position: fixed; /* 固定定位，不随网页滚动 */
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(0,0,0,0) 70%); /* 径向渐变，中心亮四周暗 */
-    border-radius: 50%;
-    pointer-events: none; /* 极其重要：让鼠标穿透它，不影响你点击下面的按钮 */
-    transform: translate(-50%, -50%); /* 让光晕的中心点刚好在鼠标指针上 */
-    z-index: 9999; /* 放在最上层 */
-    transition: opacity 0.3s ease;
-    opacity: 0; /* 默认隐藏，等鼠标进来再显示 */
-}
     </style>
 </head>
-<!-- === 跟随鼠标的光晕 === -->
-<div id="cursor-glow"></div>
-<!-- === 驱动光晕的 JavaScript === -->
-<script>
-    // 1. 找到我们刚才放的光晕盒子
-    const glow = document.getElementById('cursor-glow');
-
-    // 2. 监听鼠标在页面上的移动
-    document.addEventListener('mousemove', (e) => {
-        // e.clientX 和 e.clientY 就是鼠标当前的 X 和 Y 坐标
-        glow.style.left = e.clientX + 'px';
-        glow.style.top = e.clientY + 'px';
-        
-        // 只要鼠标动了，就显示光晕
-        glow.style.opacity = '1';
-    });
-
-    // 3. 鼠标离开网页时，把光晕藏起来
-    document.addEventListener('mouseleave', () => {
-        glow.style.opacity = '0';
-    });
-</script>
 <body>
+
+    <!-- === 跟随鼠标的光晕 === -->
+    <div id="cursor-glow"></div>
 
     <!-- ======== 第一屏：炫酷的个人主页 ======== -->
     <div class="hero-section" id="top">
         <div class="glow"></div>
         
         <div class="hero-container">
-            <div class="avatar">J</div>
+            <!-- 音乐播放按钮 -->
+            <div class="avatar" id="music-btn" title="点击播放/暂停我的 AI 音乐">🎵</div>
+            
+            <!-- 音频标签，已修改为 BGM.m4a -->
+            <audio id="bg-music" src="BGM.m4a" loop></audio>
             
             <h1>Hi, I'm <span class="gradient-text">JIAJOLOVE</span></h1>
-            <p>用代码构建我的世界，从零开始，永不止步。</p>
+            <p>用代码构建我的世界，用音乐表达我的灵魂。</p>
             
             <div class="btn-group">
                 <a href="https://github.com/JIAJOLOVE" class="btn btn-primary" target="_blank">查看我的 GitHub</a>
-                <!-- 这个按钮现在不再跳转新页面，而是利用锚点直接滑到下面的代码区 -->
                 <a href="#code-notes" class="btn btn-outline">📖 我的代码魔法本</a>
             </div>
         </div>
@@ -299,7 +301,7 @@
         <p><strong>大白话解释：</strong>网页默认会把所有空格和换行吃掉。用 <code>&lt;pre&gt;</code> 标签包裹，就能完美保留所有的缩进和代码排版。</p>
         <pre><code>&lt;pre&gt;
     &lt;code&gt;
-        // 代码在这里原样展示
+        // 你的代码在这里原样展示
     &lt;/code&gt;
 &lt;/pre&gt;</code></pre>
 
@@ -321,14 +323,14 @@
 
         <!-- 解释 9 -->
         <h2>9. 为什么加了边框，盒子不会变形？（盒模型设定）</h2>
-        <p><strong>大白话解释：</strong>通常会设定一个宽度 100px 的盒子，如果再加 10px 的内边距，它会撑大到 120px。<code>box-sizing: border-box;</code> 改变了这个规则，让宽度包含内边距，保证页面排版不乱。</p>
+        <p><strong>大白话解释：</strong>通常你设定一个宽度 100px 的盒子，如果再加 10px 的内边距，它会撑大到 120px。<code>box-sizing: border-box;</code> 改变了这个规则，让宽度包含内边距，保证页面排版不乱。</p>
         <pre><code>* {
     box-sizing: border-box;
 }</code></pre>
 
         <!-- 解释 10 -->
         <h2>10. 按钮之间怎么自动保持距离？（Flex 间隙）</h2>
-        <p><strong>大白话解释：</strong>在按钮组里，有两个按钮。加上 <code>gap: 20px;</code>，就会自动在两个按钮中间留出 20 像素的空隙，不用再去写复杂的 margin 边距了。</p>
+        <p><strong>大白话解释：</strong>在你的按钮组里，有两个按钮。加上 <code>gap: 20px;</code>，就会自动在两个按钮中间留出 20 像素的空隙，不用再去写复杂的 margin 边距了。</p>
         <pre><code>.btn-group {
     display: flex;
     gap: 20px; /* 让子元素之间保持 20px 的距离 */
@@ -338,14 +340,12 @@
         <h2>11. 鼠标光晕是怎么画出来，且不挡鼠标点击的？（CSS 篇）</h2>
         <p><strong>大白话解释：</strong>用 <code>position: fixed</code> 让光晕固定在屏幕上；用径向渐变（<code>radial-gradient</code>）画出中心亮、四周暗的圆形；最神奇的是 <code>pointer-events: none;</code>，它像给光晕穿了“隐身衣”，鼠标能直接穿透它点到背后的按钮！</p>
         <pre><code>#cursor-glow {
-    position: fixed; /* 固定在屏幕上，不随滚动条滚动 */
+    position: fixed;
     width: 400px;
     height: 400px;
-    /* 径向渐变：从中心开始散发光芒 */
     background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(0,0,0,0) 70%);
     border-radius: 50%;
-    pointer-events: none; /* 核心魔法：让鼠标穿透这层，不影响点击 */
-    /* 把光晕的中心点，移动到鼠标指针的箭头上 */
+    pointer-events: none; /* 让鼠标穿透这层 */
     transform: translate(-50%, -50%);
 }</code></pre>
 
@@ -357,21 +357,43 @@ const glow = document.getElementById('cursor-glow');
 
 // 2. 开启监听：当鼠标在网页上移动时
 document.addEventListener('mousemove', (e) => {
-    // e.clientX 是鼠标的左右位置，e.clientY 是上下位置
     glow.style.left = e.clientX + 'px'; // 让光晕移动到鼠标的X轴
     glow.style.top = e.clientY + 'px';  // 让光晕移动到鼠标的Y轴
-    
     glow.style.opacity = '1'; // 显示光晕
-});
-
-// 3. 鼠标离开网页时，把光晕隐藏起来
-document.addEventListener('mouseleave', () => {
-    glow.style.opacity = '0';
 });</code></pre>
 
         <!-- 返回顶部 -->
         <a href="#top" class="back-to-top">↑ 返回顶部</a>
     </div>
 
+    <!-- === 所有的 JavaScript 代码放在这里 === -->
+    <script>
+        // --- 1. 鼠标光晕逻辑 ---
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+            glow.style.opacity = '1';
+        });
+        document.addEventListener('mouseleave', () => {
+            glow.style.opacity = '0';
+        });
+
+        // --- 2. 音乐播放逻辑 ---
+        const musicBtn = document.getElementById('music-btn');
+        const bgMusic = document.getElementById('bg-music');
+
+        musicBtn.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play(); // 播放
+                musicBtn.classList.add('playing'); // 加上旋转特效
+                musicBtn.innerHTML = '🎶'; // 图标变成音符
+            } else {
+                bgMusic.pause(); // 暂停
+                musicBtn.classList.remove('playing'); // 移除旋转特效
+                musicBtn.innerHTML = '🎵'; // 图标恢复
+            }
+        });
+    </script>
 </body>
 </html>
