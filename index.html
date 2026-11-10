@@ -362,6 +362,27 @@ document.addEventListener('mousemove', (e) => {
     glow.style.opacity = '1'; // 显示光晕
 });</code></pre>
 
+        <!-- 解释 13 -->
+        <h2>13. 网页是怎么播放音乐的？（Audio 标签与事件）</h2>
+        <p><strong>大白话解释：</strong>用 <code>&lt;audio&gt;</code> 标签在网页里藏一个隐形播放器。JavaScript 开启了“点击监听器”（<code>addEventListener</code>），当点击头像时，它通过判断 <code>paused</code> 属性来决定是播放还是暂停，同时操控 CSS 类名实现旋转特效。</p>
+        <pre><code>// 1. 获取播放按钮和隐藏的音频元素
+const musicBtn = document.getElementById('music-btn');
+const bgMusic = document.getElementById('bg-music');
+
+// 2. 监听按钮的点击事件
+musicBtn.addEventListener('click', () => {
+    // 3. 判断音频是否处于暂停状态
+    if (bgMusic.paused) {
+        bgMusic.play(); // 如果是暂停，就播放音乐
+        musicBtn.classList.add('playing'); // 加上旋转特效的类名
+        musicBtn.innerHTML = '🎶'; // 图标变成跳动音符
+    } else {
+        bgMusic.pause(); // 如果是播放中，就暂停
+        musicBtn.classList.remove('playing'); // 移除旋转特效
+        musicBtn.innerHTML = '🎵'; // 图标恢复为普通音符
+    }
+});</code></pre>
+
         <!-- 返回顶部 -->
         <a href="#top" class="back-to-top">↑ 返回顶部</a>
     </div>
