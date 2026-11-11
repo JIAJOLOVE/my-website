@@ -215,6 +215,44 @@
             text-decoration: none;
             font-weight: bold;
         }
+        /* === 移动端专属适配（当屏幕小于 600px 时生效） === */
+@media (max-width: 600px) {
+    /* 1. 缩小大标题，防止换行 */
+    h1 {
+        font-size: 2.2rem; /* 电脑是3.5rem，手机改成2.2就刚好 */
+        white-space: nowrap; /* 强制不换行 */
+        letter-spacing: 1px;
+    }
+
+    /* 2. 缩小副标题，增加行高 */
+    .hero-container p {
+        font-size: 0.95rem;
+        padding: 0 15px; /* 左右留一点空隙，别贴边 */
+    }
+
+    /* 3. 按钮变成上下排布，且占满宽度 */
+    .btn-group {
+        flex-direction: column; 
+        width: 100%;
+        max-width: 250px;
+        margin: 0 auto;
+        gap: 12px; /* 上下按钮的间距 */
+    }
+
+    .btn {
+        padding: 12px 20px;
+        width: 100%; /* 按钮拉长，更好点 */
+        font-size: 1rem;
+    }
+
+    /* 4. 头像稍微缩一点 */
+    .avatar {
+        width: 90px;
+        height: 90px;
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+}
     </style>
 </head>
 
