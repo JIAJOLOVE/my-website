@@ -271,6 +271,16 @@
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
 
+    // 后增：手机端自动减少粒子数量
+let particleCount = 80;   
+let linkDistance = 120;   
+let particleSpeed = 1;    
+
+if (width < 768) { 
+    particleCount = 30;   // 手机端只留30个
+    linkDistance = 70;    // 连线距离缩短
+    particleSpeed = 0.5;  // 速度变慢
+}
     // 2. 颜色盘（霓虹色）
     const colors = ['#ff2a75', '#00f0ff', '#a855f7', '#facc15'];
     const particles = [];
@@ -288,8 +298,8 @@
         this.y = Math.random() * height;
         this.radius = Math.random() * 2 + 1;
         this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.vx = (Math.random() - 0.5) * 1;
-        this.vy = (Math.random() - 0.5) * 1;
+        this.vx = (Math.random() - 0.5) * particleSpeed;
+        this.vy = (Math.random() - 0.5) * particleSpeed;
 
         // 绘制圆点
         this.draw = function() {
@@ -316,7 +326,7 @@
     }
 
     // 5. 初始化粒子数组（80个）
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle());
     }
 
@@ -330,8 +340,8 @@
             for (let j = i + 1; j < particles.length; j++) {
                 let distance = getDistance(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
                 
-                // 距离小于 120 就画线
-                if (distance < 120) {
+                // 距离小于 linkDistance 就画线
+                if (distance < linkDistance) {
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
